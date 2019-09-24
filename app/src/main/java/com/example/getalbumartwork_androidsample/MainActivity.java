@@ -63,24 +63,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (artByte != null) {
                         InputStream artByteArray = new ByteArrayInputStream(mmr.getEmbeddedPicture());
                         Bitmap bitmap = BitmapFactory.decodeStream(artByteArray);
-                        ((ImageView)findViewById(R.id.imageView)).setImageBitmap(bitmap);
+                        ((ImageView) findViewById(R.id.imageView)).setImageBitmap(bitmap);
 
                         ColorArt colorArt = new ColorArt(bitmap);
-                        ((TextView) findViewById(R.id.textBackgroundColor)).setTextColor(colorArt.getBackgroundColor());
-                        ((TextView) findViewById(R.id.textPrimaryColor)).setTextColor(colorArt.getPrimaryColor());
-                        ((TextView) findViewById(R.id.textSecondaryColor)).setTextColor(colorArt.getSecondaryColor());
-                        ((TextView) findViewById(R.id.textDetailColor)).setTextColor(colorArt.getDetailColor());
+                        int backgroundColor = colorArt.getBackgroundColor();
+                        int primaryColor = colorArt.getPrimaryColor();
+                        int secondaryColor = colorArt.getSecondaryColor();
+                        int detailColor = colorArt.getDetailColor();
+                        setTextColor(backgroundColor, primaryColor, secondaryColor, detailColor);
                     } else {
                         ((ImageView) findViewById(R.id.imageView)).setImageResource(R.drawable.no_image);
-                        ((TextView) findViewById(R.id.textBackgroundColor)).setTextColor(getColor(android.R.color.secondary_text_light));
-                        ((TextView) findViewById(R.id.textPrimaryColor)).setTextColor(getColor(android.R.color.secondary_text_light));
-                        ((TextView) findViewById(R.id.textSecondaryColor)).setTextColor(getColor(android.R.color.secondary_text_light));
-                        ((TextView) findViewById(R.id.textDetailColor)).setTextColor(getColor(android.R.color.secondary_text_light));
+                        int defaultTextColor = getColor(android.R.color.secondary_text_light);
+                        setTextColor(defaultTextColor, defaultTextColor, defaultTextColor, defaultTextColor);
                     }
                 }
             }
             cursor.close();
         }
+    }
+
+    public void setTextColor(int backgroundColor, int primaryColor, int secondaryColor, int detailColor) {
+        ((TextView) findViewById(R.id.textBackgroundColor)).setTextColor(backgroundColor);
+        ((TextView) findViewById(R.id.textPrimaryColor)).setTextColor(primaryColor);
+        ((TextView) findViewById(R.id.textSecondaryColor)).setTextColor(secondaryColor);
+        ((TextView) findViewById(R.id.textDetailColor)).setTextColor(detailColor);
     }
 }
 
